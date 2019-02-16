@@ -17,6 +17,8 @@ import { mapGetters } from 'vuex'
 import ArticlesList from '../components/ArticlesList.vue'
 import ArticleCard from '../components/ArticleCard.vue'
 
+import axios from 'axios'
+
 export default {
   name: 'home',
   components: {

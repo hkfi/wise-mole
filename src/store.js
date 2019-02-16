@@ -19,7 +19,7 @@ export default new Vuex.Store({
   },
   actions: {
     getArticles: async ({commit}) => {
-      const response = await axios.get('http://localhost:3000/articles')
+      const response = await axios.get('https://cors-anywhere.herokuapp.com/http://wise-mole-api.herokuapp.com/api/v1/articles')
       commit('pushArticles', response.data)
     },
     setArticle: ({commit}, payload) => {
