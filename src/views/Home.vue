@@ -46,6 +46,13 @@ export default {
     })
     this.getNews();
   },
+  watch: {
+    article: function() {
+      if (this.articles.length - this.index < 10) {
+        this.getNews();
+      }
+    }
+  },
   computed: {
     ...mapGetters(['article', 'articles']),
     index: function() {
