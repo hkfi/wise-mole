@@ -3,14 +3,20 @@
     <button @click="readText('hello')" >
       listen now
     </button>
+    <List/>
   </div>
 </template>
 
 <script>
 import {VoiceRSS} from "./voicerss-tts.min.js"
 
+import List from '../components/HelloWorld.vue'
+
 export default {
   name: 'home',
+  components: {
+    List
+  },
   mounted() {
     console.log('mounted, querying db for news')
   },
