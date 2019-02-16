@@ -1,20 +1,34 @@
 <template>
   <div class="home">
-    <button
-      v-if="$store.state.article.content"
-      @click="readText(article.content)" >
-      Play
-    </button>
-    <button @click="prevNews">
-      Prev
-    </button>
-    <button @click="nextNews">
-      Next
-    </button>
     <div class="columns">
-      <ArticleCard class="column" />
-      <ArticlesList class="column" />
+      <div class="column">
+        <button
+          v-show="index > 0"
+          @click="prevNews"
+          class="is-large">
+          <span class="icon">
+            <i class="fas fa-arrow-left"></i>
+          </span>
+        </button>
+      </div>
+      <div class="column">
+        <button
+          v-show="$store.state.article.content"
+          @click="readText(article.content)" >
+          Play
+        </button>
+      </div>
+      <div class="column">
+        <button
+          @click="nextNews"
+          class="is-large">
+          <span class="icon">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+        </button>
+      </div>
     </div>
+    <ArticleCard class="column" />
   </div>
 </template>
 
@@ -22,7 +36,6 @@
 import { VoiceRSS } from "../util/voicerss-tts.min.js"
 import { mapGetters } from 'vuex'
 
-import ArticlesList from '../components/ArticlesList.vue'
 import ArticleCard from '../components/ArticleCard.vue'
 
 import axios from 'axios'
@@ -30,7 +43,6 @@ import axios from 'axios'
 export default {
   name: 'home',
   components: {
-    ArticlesList,
     ArticleCard
   },
   mounted() {
@@ -47,10 +59,11 @@ export default {
     this.getNews();
   },
   watch: {
-    article: function() {
+    article: function(oldVal, newVal) {
       if (this.articles.length - this.index < 10) {
         this.getNews();
       }
+      this.readText(this.$store.state.article.title)
     }
   },
   computed: {
