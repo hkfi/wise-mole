@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <table
+      <!-- <table
         class="table is-fullwidth is-scrollable"
         v-for="article in articles" :key="article.id">
         <thead>
@@ -17,7 +17,12 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
+      <section>
+        <div v-for="article in articles" :key="article.id">
+          <a @click="setArticle(article)">{{article.title}}</a>
+        </div>
+      </section>
 
       <!-- <h1>{{article.title}}</h1> -->
     </div>
@@ -41,11 +46,12 @@ export default {
 }
 </script>
 
-<style lang="sass">
-.table
-  &.is-scrollable
-    tbody
-      overflow-y: scroll
-      width: auto
-      position: absolute
+<style lang="scss" scoped>
+
+section {
+  height: 100%;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column;
+}
 </style>
