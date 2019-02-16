@@ -35,6 +35,15 @@ export default {
   },
   mounted() {
     console.log('mounted, querying db for news');
+    window.addEventListener('keydown', e => {
+      if (e.keyCode === 37) {
+        this.prevNews();
+      } else if (e.keyCode === 39) {
+        this.nextNews();
+      } else if (e.keyCode === 32) {
+        this.readText(this.article.content);
+      }
+    })
     this.getNews();
   },
   computed: {
