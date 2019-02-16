@@ -28,7 +28,7 @@
         </button>
       </div>
     </div>
-    <button
+    <button class="round-button"
       @mousedown="recordCommand"
       @mouseup="stopRecording">
       record
@@ -143,3 +143,25 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .home {
+    display: flex;
+    justify-content: center;
+  }
+  .round-button {
+    height: 60vh;
+    width: 60vh;
+    border-radius: 50%;
+    background-color: #fbc333;
+    border: none;
+    box-shadow: 1px 1px 20px -5px #999;
+    font-size: 100px;
+    outline: none;
+    &:active {
+      box-shadow: none;
+      background-color: #e4b132;
+      outline: none;
+    }
+  }
+</style>
