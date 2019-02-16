@@ -28,6 +28,9 @@
         </button>
       </div>
     </div>
+    <button @click="recordCommand">
+      record
+    </button>
     <ArticleCard class="column" />
   </div>
 </template>
@@ -84,6 +87,30 @@ export default {
         f: '44khz_16bit_stereo',
         ssml: false
       });
+    },
+    recordCommand() {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          const mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.start();
+
+          const audioChunks = [];
+          
+          mediaRecorder.addEventListener("dataavailable", event => {
+          audioChunks.push(event.data);
+          });
+
+          mediaRecorder.addEventListener("stop", () => {
+            const audioBlob = new Blob(audioChunks);
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioUrl);
+            audio.play();
+          });
+
+          setTimeout(() => {
+            mediaRecorder.stop();
+            }, 3000);
+        });
     },
     async getNews() {
       console.log('getting news')
