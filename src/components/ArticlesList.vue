@@ -49,7 +49,7 @@ export default {
 <style lang="scss" scoped>
 
 section {
-  height: 100%;
+  height: 90vh;
   display: flex;
   overflow-y: scroll;
   flex-direction: column;
