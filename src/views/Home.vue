@@ -28,6 +28,10 @@
         </button>
       </div>
     </div>
+    <button @mousedown="recordCommand"
+    @mouseup="stopRecording">
+      record
+    </button>
     <ArticleCard class="column" />
   </div>
 </template>
@@ -44,6 +48,11 @@ export default {
   name: 'home',
   components: {
     ArticleCard
+  },
+  data() {
+    return {
+      mediaRecorder: ""
+    }
   },
   mounted() {
     console.log('mounted, querying db for news');
@@ -84,6 +93,27 @@ export default {
         f: '44khz_16bit_stereo',
         ssml: false
       });
+    },
+    async recordCommand() {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      this.mediaRecorder = new MediaRecorder(stream);
+      this.mediaRecorder.start();
+
+      const audioChunks = [];
+      
+      this.mediaRecorder.addEventListener("dataavailable", event => {
+        audioChunks.push(event.data);
+      });
+
+      this.mediaRecorder.addEventListener("stop", () => {
+        const audioBlob = new Blob(audioChunks);
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+      });
+    },
+    stopRecording() {
+      this.mediaRecorder.stop()
     },
     async getNews() {
       console.log('getting news')
