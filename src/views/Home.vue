@@ -1,7 +1,15 @@
 <template>
   <div class="home">
-    <button @click="readText(article.content)" >
-      listen now
+    <button
+      v-if="$store.state.article.content"
+      @click="readText(article.content)" >
+      Play
+    </button>
+    <button @click="prevNews">
+      Prev
+    </button>
+    <button @click="nextNews">
+      Next
     </button>
     <div class="columns">
       <ArticleCard class="column" />
@@ -30,7 +38,10 @@ export default {
     this.getNews();
   },
   computed: {
-    ...mapGetters(['article'])
+    ...mapGetters(['article', 'articles']),
+    index: function() {
+      return this.articles.findIndex(article => article.title === this.article.title)
+    }
   },
   methods: {
     readText(text) {
@@ -49,6 +60,15 @@ export default {
       console.log('getting news')
       await this.$store.dispatch('getArticles')
       console.log(this.$store.state.articles)
+    },
+    prevNews() {
+      if (this.index !== 0) {
+        const prevArticle = this.articles[this.index - 1]
+        this.$store.dispatch('setArticle', prevArticle)
+      }
+    },
+    nextNews() {
+      this.$store.dispatch('setArticle', this.articles[this.index + 1])
     }
   }
 }
