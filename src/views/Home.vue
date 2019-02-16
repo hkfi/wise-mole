@@ -51,7 +51,7 @@ export default {
   },
   data() {
     return {
-      mediaRecorder: ""
+      recognition: ""
     }
   },
   mounted() {
@@ -94,26 +94,17 @@ export default {
         ssml: false
       });
     },
-    async recordCommand() {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      this.mediaRecorder = new MediaRecorder(stream);
-      this.mediaRecorder.start();
-
-      const audioChunks = [];
-      
-      this.mediaRecorder.addEventListener("dataavailable", event => {
-        audioChunks.push(event.data);
-      });
-
-      this.mediaRecorder.addEventListener("stop", () => {
-        const audioBlob = new Blob(audioChunks);
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audio.play();
-      });
+    recordCommand() {
+      window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+      this.recognition = new window.SpeechRecognition();
+      this.recognition.continuous = true;
+      this.recognition.onresult = (event) => {
+        console.log('transscript: ', event.results[event.results.length -1][0].transcript);
+      }
+      this.recognition.start()
     },
     stopRecording() {
-      this.mediaRecorder.stop()
+      this.recognition.stop()
     },
     async getNews() {
       console.log('getting news')
