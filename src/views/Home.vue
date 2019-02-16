@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       recognition: "",
-      word: ""
+      word: "asdf"
     }
   },
   mounted() {
@@ -70,13 +70,13 @@ export default {
     this.getNews();
   },
   watch: {
-    article: function(oldVal, newVal) {
+    article: function() {
       if (this.articles.length - this.index < 10) {
         this.getNews();
       }
       this.readText(this.$store.state.article.title)
     },
-    word: function(oldVal, newVal) {
+    word: function(newVal, oldVal) {
       newVal.toLowerCase();
       switch(newVal) {
         case "":
@@ -123,7 +123,7 @@ export default {
     },
     stopRecording() {
       this.recognition.stop()
-      this.word = "";
+      this.word = ""
     },
     async getNews() {
       console.log('getting news')
