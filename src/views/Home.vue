@@ -53,7 +53,8 @@ export default {
   data() {
     return {
       recognition: "",
-      word: "asdf"
+      word: "asdf",
+      speech: ""
     }
   },
   mounted() {
@@ -64,7 +65,7 @@ export default {
       } else if (e.keyCode === 39) {
         this.nextNews();
       } else if (e.keyCode === 32) {
-        this.readText(this.article.content);
+        this.betterReadText(this.article.content);
       }
     })
     this.getNews();
@@ -74,7 +75,7 @@ export default {
       if (this.articles.length - this.index < 10) {
         this.getNews();
       }
-      this.readText(this.$store.state.article.title)
+      this.betterReadText(this.$store.state.article.title)
     },
     word: function(newVal, oldVal) {
       newVal.toLowerCase();
@@ -83,12 +84,19 @@ export default {
           break;
         case "next":
           this.nextNews();
+          break
         case "back":
           this.prevNews();
+          break
         case "play":
-          this.readText(this.article.content)
+          this.betterReadText(this.article.content)
+          break
+        case "stop":
+          window.speechSynthesis.cancel();
+          break
         default:
-          this.readText('Unknown command')
+          this.betterReadText('Unknown Command')
+          break
       }
     }
   },
@@ -110,6 +118,11 @@ export default {
         f: '44khz_16bit_stereo',
         ssml: false
       });
+    },
+    betterReadText(text) {
+      this.speech = new SpeechSynthesisUtterance(text);
+      this.speech.lang = 'en-US';
+      window.speechSynthesis.speak(this.speech);
     },
     recordCommand() {
       window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
