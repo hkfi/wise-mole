@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {VoiceRSS} from "./voicerss-tts.min.js"
+import { VoiceRSS } from "../util/voicerss-tts.min.js"
 import { mapGetters } from 'vuex'
 
 import ArticlesList from '../components/ArticlesList.vue'
