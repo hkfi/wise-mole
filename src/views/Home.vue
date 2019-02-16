@@ -3,22 +3,23 @@
     <button @click="readText('hello')" >
       listen now
     </button>
-    <List/>
+    <ArticlesList/>
   </div>
 </template>
 
 <script>
 import {VoiceRSS} from "./voicerss-tts.min.js"
 
-import List from '../components/HelloWorld.vue'
+import ArticlesList from '../components/ArticlesList.vue'
 
 export default {
   name: 'home',
   components: {
-    List
+    ArticlesList
   },
   mounted() {
-    console.log('mounted, querying db for news')
+    console.log('mounted, querying db for news');
+    this.getNews();
   },
   methods: {
     readText(text) {
@@ -31,6 +32,11 @@ export default {
         f: '44khz_16bit_stereo',
         ssml: false
       });
+    },
+    async getNews() {
+      console.log('getting news')
+      await this.$store.dispatch('getArticles')
+      console.log(this.$store.state.articles)
     }
   }
 }
