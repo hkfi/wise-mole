@@ -2,38 +2,38 @@
   <div class="home">
     <div class="columns">
       <div class="column">
-        <button
+        <!-- <button
           v-show="index > 0"
           @click="prevNews"
           class="is-large">
           <span class="icon">
             <i class="fas fa-arrow-left"></i>
           </span>
-        </button>
+        </button> -->
       </div>
       <div class="column">
-        <button
+        <!-- <button
           v-show="$store.state.article.content"
           @click="readText(article.content)" >
           Play
-        </button>
+        </button> -->
       </div>
       <div class="column">
-        <button
+        <!-- <button
           @click="nextNews"
           class="is-large">
           <span class="icon">
             <i class="fas fa-arrow-right"></i>
           </span>
-        </button>
+        </button> -->
       </div>
     </div>
     <button class="round-button"
       @mousedown="recordCommand"
       @mouseup="stopRecording">
-      record
+      Hold
     </button>
-    <ArticleCard class="column" />
+    <!-- <ArticleCard class="column" /> -->
   </div>
 </template>
 
@@ -148,16 +148,18 @@ export default {
   .home {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   .round-button {
-    height: 60vh;
-    width: 60vh;
+    height: 400px;
+    width: 400px;
     border-radius: 50%;
     background-color: #fbc333;
     border: none;
     box-shadow: 1px 1px 20px -5px #999;
     font-size: 100px;
     outline: none;
+    margin: 50px;
     &:active {
       box-shadow: none;
       background-color: #e4b132;
