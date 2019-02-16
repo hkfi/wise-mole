@@ -6,8 +6,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'ArticleCard',
-  props: ['article']
+  computed: {
+    ...mapGetters(['article'])
+  }
 }
 </script>

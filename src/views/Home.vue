@@ -3,6 +3,7 @@
     <button @click="readText('hello')" >
       listen now
     </button>
+    <ArticleCard/>
     <ArticlesList/>
   </div>
 </template>
@@ -11,11 +12,13 @@
 import {VoiceRSS} from "./voicerss-tts.min.js"
 
 import ArticlesList from '../components/ArticlesList.vue'
+import ArticleCard from '../components/ArticleCard.vue'
 
 export default {
   name: 'home',
   components: {
-    ArticlesList
+    ArticlesList,
+    ArticleCard
   },
   mounted() {
     console.log('mounted, querying db for news');
