@@ -28,8 +28,9 @@
         </button>
       </div>
     </div>
-    <button @mousedown="recordCommand"
-    @mouseup="stopRecording">
+    <button
+      @mousedown="recordCommand"
+      @mouseup="stopRecording">
       record
     </button>
     <ArticleCard class="column" />
@@ -51,7 +52,8 @@ export default {
   },
   data() {
     return {
-      recognition: ""
+      recognition: "",
+      word: ""
     }
   },
   mounted() {
@@ -73,6 +75,21 @@ export default {
         this.getNews();
       }
       this.readText(this.$store.state.article.title)
+    },
+    word: function(oldVal, newVal) {
+      newVal.toLowerCase();
+      switch(newVal) {
+        case "":
+          break;
+        case "next":
+          this.nextNews();
+        case "back":
+          this.prevNews();
+        case "play":
+          this.readText(this.article.content)
+        default:
+          this.readText('Unknown command')
+      }
     }
   },
   computed: {
@@ -100,11 +117,13 @@ export default {
       this.recognition.continuous = true;
       this.recognition.onresult = (event) => {
         console.log('transscript: ', event.results[event.results.length -1][0].transcript);
+        this.word = event.results[event.results.length -1][0].transcript;
       }
       this.recognition.start()
     },
     stopRecording() {
       this.recognition.stop()
+      this.word = "";
     },
     async getNews() {
       console.log('getting news')
@@ -119,6 +138,7 @@ export default {
     },
     nextNews() {
       this.$store.dispatch('setArticle', this.articles[this.index + 1])
+      console.log(this.article)
     }
   }
 }
