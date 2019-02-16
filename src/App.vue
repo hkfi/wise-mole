@@ -7,5 +7,6 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+@import '~bulma/css/bulma.css';
 </style>

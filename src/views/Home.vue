@@ -3,8 +3,10 @@
     <button @click="readText(article.content)" >
       listen now
     </button>
-    <ArticleCard/>
-    <ArticlesList/>
+    <div class="columns">
+      <ArticleCard class="column" />
+      <ArticlesList class="column" />
+    </div>
   </div>
 </template>
 
