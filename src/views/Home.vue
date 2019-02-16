@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <button @click="readText('hello')" >
+    <button @click="readText(article.content)" >
       listen now
     </button>
     <ArticleCard/>
@@ -10,6 +10,7 @@
 
 <script>
 import {VoiceRSS} from "./voicerss-tts.min.js"
+import { mapGetters } from 'vuex'
 
 import ArticlesList from '../components/ArticlesList.vue'
 import ArticleCard from '../components/ArticleCard.vue'
@@ -24,8 +25,12 @@ export default {
     console.log('mounted, querying db for news');
     this.getNews();
   },
+  computed: {
+    ...mapGetters(['article'])
+  },
   methods: {
     readText(text) {
+      console.log(text)
       VoiceRSS.speech({
         key: '7f63364aebe443a9abc5a8a6b6e3ef5b',
         src: text,
