@@ -28,7 +28,8 @@
         </button>
       </div>
     </div>
-    <button @click="recordCommand">
+    <button @mousedown="recordCommand"
+    @mouseup="stopRecording">
       record
     </button>
     <ArticleCard class="column" />
@@ -47,6 +48,11 @@ export default {
   name: 'home',
   components: {
     ArticleCard
+  },
+  data() {
+    return {
+      mediaRecorder: ""
+    }
   },
   mounted() {
     console.log('mounted, querying db for news');
@@ -88,29 +94,26 @@ export default {
         ssml: false
       });
     },
-    recordCommand() {
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-          const mediaRecorder = new MediaRecorder(stream);
-          mediaRecorder.start();
+    async recordCommand() {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      this.mediaRecorder = new MediaRecorder(stream);
+      this.mediaRecorder.start();
 
-          const audioChunks = [];
-          
-          mediaRecorder.addEventListener("dataavailable", event => {
-          audioChunks.push(event.data);
-          });
+      const audioChunks = [];
+      
+      this.mediaRecorder.addEventListener("dataavailable", event => {
+        audioChunks.push(event.data);
+      });
 
-          mediaRecorder.addEventListener("stop", () => {
-            const audioBlob = new Blob(audioChunks);
-            const audioUrl = URL.createObjectURL(audioBlob);
-            const audio = new Audio(audioUrl);
-            audio.play();
-          });
-
-          setTimeout(() => {
-            mediaRecorder.stop();
-            }, 3000);
-        });
+      this.mediaRecorder.addEventListener("stop", () => {
+        const audioBlob = new Blob(audioChunks);
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+      });
+    },
+    stopRecording() {
+      this.mediaRecorder.stop()
     },
     async getNews() {
       console.log('getting news')
