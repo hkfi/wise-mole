@@ -57,7 +57,8 @@ export default {
       recognition: "",
       word: "asdf",
       speech: "",
-      givenInstructions: false
+      givenInstructions: false,
+      start: false
     }
   },
   mounted() {
@@ -86,12 +87,18 @@ export default {
         case "":
           break;
         case "next":
+          window.speechSynthesis.cancel();
           this.nextNews();
           break
         case "back":
+          window.speechSynthesis.cancel();
           this.prevNews();
           break
         case "play":
+          if (this.start === false) {
+            this.nextNews();
+            this.start = true;
+          }
           this.betterReadText(this.article.content)
           break
         case "stop":
