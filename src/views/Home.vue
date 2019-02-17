@@ -192,6 +192,7 @@ export default {
     box-shadow: 1px 1px 20px -5px #999;
     font-size: 100px;
     outline: none;
+    color: #30142A;
     &:active {
       box-shadow: none;
       background-color: #c7bad6;
