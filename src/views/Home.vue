@@ -74,7 +74,7 @@ export default {
         case "pause":
           window.speechSynthesis.pause();
           break
-        case "resume":
+        case "continue":
           window.speechSynthesis.resume();
         default:
           if (this.givenInstructions) {
