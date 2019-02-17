@@ -2,9 +2,9 @@
   <div class="home">
     <button class="round-button"
       @mousedown="recordCommand();addMicrophone();"
-      @touchstart="recordCommand();addMicrophone();"
+      @touchstart.prevent="recordCommand();addMicrophone();"
       @mouseup="stopRecording();addNewspaper();"
-      @touchend="stopRecording();addNewspaper();"
+      @touchend.prevent="stopRecording();addNewspaper();"
       style="display:flex;flex-direction:column;justify-content:center;align-items:center">
       <i class="far fa-newspaper"></i>
       <i class="far fa-hand-point-up"></i>
@@ -109,6 +109,7 @@ export default {
       this.recognition.start()
     },
     addMicrophone() {
+      window.speechSynthesis.pause();
       const btn = document.querySelector('.round-button')
       btn.innerHTML = "<i class='fas fa-microphone'></i>"
     },
