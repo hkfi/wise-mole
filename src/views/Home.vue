@@ -30,7 +30,9 @@
     <!-- </div> -->
     <button class="round-button"
       @mousedown="recordCommand();addMicrophone();"
+      @touchstart="recordCommand();addMicrophone();"
       @mouseup="stopRecording();addNewspaper();"
+      @touchend="stopRecording();addNewspaper();"
       style="display:flex;flex-direction:column;justify-content:center;align-items:center">
       <i class="far fa-newspaper"></i>
       <i class="far fa-hand-point-up"></i>
@@ -214,4 +216,37 @@ export default {
         0% { transform: translateY(0); }
         100% { transform: translateY(-5px); }
     }
+
+    @-webkit-keyframes grow {
+    from {
+        -webkit-transform:scale(1);
+    }
+    to {
+        -webkit-transform:scale(4.333);
+    }
+  }
+  .fa-microphone {
+    transition-property: -moz-transform;
+    transition-duration: 1s;
+    animation-name: grow;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+@-moz-keyframes grow {
+    from {
+        -moz-transform:scale(1);
+    }
+    to {
+        -moz-transform:scale(1.333);
+    }
+}
+@keyframes grow {
+    from {
+        transform:scale(1);
+    }
+    to {
+        transform:scale(1.333);
+    }
+}
 </style>
