@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <!-- <div id="nav">
       <h1>News Reader</h1>
-    </div>
+    </div> -->
     <router-view/>
   </div>
 </template>

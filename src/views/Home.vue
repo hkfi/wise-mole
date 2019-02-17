@@ -29,9 +29,11 @@
       <!-- </div> -->
     <!-- </div> -->
     <button class="round-button"
-      @mousedown="recordCommand();changeBtnText();"
-      @mouseup="stopRecording();changeBtnText();">
-      Hold
+      @mousedown="recordCommand();addMicrophone();"
+      @mouseup="stopRecording();addNewspaper();"
+      style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+      <i class="far fa-newspaper"></i>
+      <i class="far fa-hand-point-up"></i>
     </button>
     <!-- <ArticleCard class="column" /> -->
   </div>
@@ -145,13 +147,13 @@ export default {
       }
       this.recognition.start()
     },
-    changeBtnText() {
+    addMicrophone() {
       const btn = document.querySelector('.round-button')
-      if (btn.innerText === "Hold") {
-        btn.innerText = "Speak"
-      } else {
-        btn.innerText = "Hold"
-      }
+      btn.innerHTML = "<i class='fas fa-microphone'></i>"
+    },
+    addNewspaper() {
+      const btn = document.querySelector('.round-button')
+      btn.innerHTML =  "<i class='far fa-newspaper'></i><i class='far fa-hand-point-up'></i>"
     },
     stopRecording() {
       this.recognition.stop()
@@ -185,20 +187,30 @@ export default {
   .round-button {
     height: 100vh;
     width: 100vw;
-    // border-radius: 50%;
-    background-color: #fbc333;
+    background-color: #E5D9F2;
     border: none;
     box-shadow: 1px 1px 20px -5px #999;
     font-size: 100px;
     outline: none;
-    // margin: 20px 50px 50px 50px;
     &:active {
       box-shadow: none;
-      background-color: #e4b132;
+      background-color: #c7bad6;
       outline: none;
     }
     &:hover {
       cursor: pointer;
     }
   }
+  .fa-hand-point-up {
+    -webkit-animation: action 1s infinite  alternate;
+        animation: action 1s infinite  alternate;
+    }
+    @-webkit-keyframes action {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-5px); }
+    }
+    @keyframes action {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-5px); }
+    }
 </style>
