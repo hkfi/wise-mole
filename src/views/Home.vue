@@ -94,6 +94,11 @@ export default {
         case "stop":
           window.speechSynthesis.cancel();
           break
+        case "pause":
+          window.speechSynthesis.pause();
+          break
+        case "resume":
+          window.speechSynthesis.resume();
         default:
           this.betterReadText('Unknown Command')
           break
