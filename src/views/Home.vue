@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <div class="columns">
-      <div class="column">
+    <!-- <div class="columns"> -->
+      <!-- <div class="column"> -->
         <!-- <button
           v-show="index > 0"
           @click="prevNews"
@@ -10,15 +10,15 @@
             <i class="fas fa-arrow-left"></i>
           </span>
         </button> -->
-      </div>
-      <div class="column">
+      <!-- </div> -->
+      <!-- <div class="column"> -->
         <!-- <button
           v-show="$store.state.article.content"
           @click="readText(article.content)" >
           Play
         </button> -->
-      </div>
-      <div class="column">
+      <!-- </div>
+      <div class="column"> -->
         <!-- <button
           @click="nextNews"
           class="is-large">
@@ -26,11 +26,11 @@
             <i class="fas fa-arrow-right"></i>
           </span>
         </button> -->
-      </div>
-    </div>
+      <!-- </div> -->
+    <!-- </div> -->
     <button class="round-button"
-      @mousedown="recordCommand"
-      @mouseup="stopRecording">
+      @mousedown="recordCommand();changeBtnText();"
+      @mouseup="stopRecording();changeBtnText();">
       Hold
     </button>
     <!-- <ArticleCard class="column" /> -->
@@ -54,7 +54,8 @@ export default {
     return {
       recognition: "",
       word: "asdf",
-      speech: ""
+      speech: "",
+      givenInstructions: false
     }
   },
   mounted() {
@@ -100,7 +101,12 @@ export default {
         case "resume":
           window.speechSynthesis.resume();
         default:
-          this.betterReadText('Unknown Command')
+          if (this.givenInstructions) {
+            this.betterReadText('Sorry, try again.')
+          } else {
+            this.betterReadText('Sorry, I missed that. Available commands: next, play, pause, stop, continue, and back.')
+            this.givenInstructions = true
+          }
           break
       }
     }
@@ -139,6 +145,14 @@ export default {
       }
       this.recognition.start()
     },
+    changeBtnText() {
+      const btn = document.querySelector('.round-button')
+      if (btn.innerText === "Hold") {
+        btn.innerText = "Speak"
+      } else {
+        btn.innerText = "Hold"
+      }
+    },
     stopRecording() {
       this.recognition.stop()
       this.word = ""
@@ -169,19 +183,22 @@ export default {
     align-items: center;
   }
   .round-button {
-    height: 400px;
-    width: 400px;
-    border-radius: 50%;
+    height: 100vh;
+    width: 100vw;
+    // border-radius: 50%;
     background-color: #fbc333;
     border: none;
     box-shadow: 1px 1px 20px -5px #999;
     font-size: 100px;
     outline: none;
-    margin: 50px;
+    // margin: 20px 50px 50px 50px;
     &:active {
       box-shadow: none;
       background-color: #e4b132;
       outline: none;
+    }
+    &:hover {
+      cursor: pointer;
     }
   }
 </style>
