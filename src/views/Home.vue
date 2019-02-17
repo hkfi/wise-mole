@@ -30,7 +30,9 @@
     <!-- </div> -->
     <button class="round-button"
       @mousedown="recordCommand();addMicrophone();"
+      @touchstart="recordCommand();addMicrophone();"
       @mouseup="stopRecording();addNewspaper();"
+      @touchend="stopRecording();addNewspaper();"
       style="display:flex;flex-direction:column;justify-content:center;align-items:center">
       <i class="far fa-newspaper"></i>
       <i class="far fa-hand-point-up"></i>
