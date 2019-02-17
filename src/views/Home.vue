@@ -34,6 +34,8 @@
       style="display:flex;flex-direction:column;justify-content:center;align-items:center">
       <i class="far fa-newspaper"></i>
       <i class="far fa-hand-point-up"></i>
+      <div class="pulse-ring">
+      </div>
     </button>
     <!-- <ArticleCard class="column" /> -->
   </div>
@@ -214,4 +216,24 @@ export default {
         0% { transform: translateY(0); }
         100% { transform: translateY(-5px); }
     }
+  .fa-microphone {
+    animation: pulsate infinite 3s;
+
+    @-webkit-keyframes pulsate {
+      0% {
+        -webkit-transform: scale(1, 1);
+        opacity: 1;
+      }
+      50% {
+        -webkit-transform: scale(1.1, 1.1);
+        opacity: 0.3;
+      }
+      100% {
+        -webkit-transform: scale(1, 1);
+        opacity: 1;
+      }
+    }
+  }
+
+
 </style>
