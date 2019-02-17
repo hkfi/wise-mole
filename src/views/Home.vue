@@ -31,6 +31,11 @@ export default {
   },
   mounted() {
     this.getNews();
+    window.addEventListener('keydown', e => {
+      if (e.keyCode === 32) {
+        window.speechSynthesis.cancel();
+      }
+    })
   },
   watch: {
     article: function() {
